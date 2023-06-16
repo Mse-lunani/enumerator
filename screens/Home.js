@@ -1,8 +1,54 @@
-import { View, StyleSheet, SafeAreaView, StatusBar, Image } from "react-native";
+import {
+  View,
+  StyleSheet,
+  SafeAreaView,
+  StatusBar,
+  Image,
+  FlatList,
+} from "react-native";
 import React from "react";
 import { Card, Layout, Text, Avatar } from "@ui-kitten/components";
+import FeatureCard from "../components/FeatureCard";
 
 export default (props) => {
+  const cardData = [
+    {
+      iconName: "account",
+      text: "BENEFICIARIES",
+      value: 54,
+      rate: 2.3,
+      color: "#2F80ED",
+      textColor: "#FFF",
+      chipColor: "rgba(255, 255, 255, 0.4)",
+    },
+    {
+      iconName: "rocket-launch",
+      text: "PROJECTS",
+      value: 16,
+      rate: 2.3,
+      color: "#FAF0EB",
+      textColor: "#8F4724",
+      chipColor: "rgba(241, 171, 136, 0.4)",
+    },
+    {
+      iconName: "rocket-launch",
+      text: "POINTS",
+      value: 20,
+      rate: 2.3,
+      color: "#EFEBFA",
+      textColor: "#4400FF",
+      chipColor: "rgba(175, 147, 251, 1)",
+    },
+    {
+      iconName: "account",
+      text: "PEOPLE PER PROJECT",
+      value: 7,
+      rate: 2.3,
+      color: "#02D3E0",
+      textColor: "#FFF",
+      chipColor: "rgba(255, 255, 255, 0.4)",
+    },
+  ];
   return (
     <Layout style={styles.container}>
       <View style={styles.profile}>
@@ -29,6 +75,21 @@ export default (props) => {
         </View>
         <Text style={styles.browse}>Browse</Text>
       </Card>
+      <Text category="h5" style={styles.category}>
+        Main Features
+      </Text>
+      <View style={styles.featureCardsWrapper}>
+        <FlatList
+          data={cardData}
+          numColumns={2}
+          renderItem={({ item }) => {
+            return <FeatureCard item={item} />;
+          }}
+        />
+      </View>
+      <Text category="h5" style={styles.category}>
+        Members per intervention
+      </Text>
     </Layout>
   );
 };
@@ -39,20 +100,16 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 10,
   },
-
   profile: {
     flexDirection: "row",
     alignItems: "center",
   },
-
   userName: {
     fontWeight: "bold",
     fontSize: 18,
-    color: "#253141",
   },
   userRole: {
     fontWeight: "400",
-    color: "#253141",
   },
   welcomeCard: {
     position: "relative",
@@ -72,13 +129,17 @@ const styles = StyleSheet.create({
     resizeMode: "contain",
     position: "absolute",
     left: 10,
-    bottom: 0,
+    bottom: -1.5,
   },
+  featureCardsWrapper: { width: "100%", marginHorizontal: "auto" },
   browse: {
     position: "absolute",
     right: 30,
     bottom: 20,
-    color: "blue",
+    color: "rgba(47, 128, 237, 1)",
     textDecorationLine: "underline",
+  },
+  category: {
+    marginVertical: 4,
   },
 });

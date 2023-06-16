@@ -17,9 +17,50 @@ import Tokengen from "../screens/Tokengen";
 import Project from "../screens/Project";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import OfflineMode from "../screens/OfflineMode";
-import { FontAwesome } from "@expo/vector-icons";
+import { Entypo, FontAwesome, MaterialIcons } from "@expo/vector-icons";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+import Home from "../screens/Home";
+import Reports from "../screens/Reports";
+import Profile from "../screens/Profile";
 const Stack = createNativeStackNavigator();
+const BottomTab = createBottomTabNavigator();
+
+const BottomApp = () => {
+  return (
+    <BottomTab.Navigator initialRouteName="Home">
+      <BottomTab.Screen
+        name="Home"
+        component={Home}
+        options={{
+          headerShown: false,
+          tabBarIcon: ({ color, size }) => (
+            <MaterialIcons name="home-filled" color={color} size={size} />
+          ),
+        }}
+      />
+      <BottomTab.Screen
+        name="Reports"
+        component={Reports}
+        options={{
+          headerShown: false,
+          tabBarIcon: ({ color, size }) => (
+            <Entypo name="text-document" color={color} size={size} />
+          ),
+        }}
+      />
+      <BottomTab.Screen
+        name="Profile"
+        component={Profile}
+        options={{
+          headerShown: false,
+          tabBarIcon: ({ color, size }) => (
+            <FontAwesome name="user-o" color={color} size={size} />
+          ),
+        }}
+      />
+    </BottomTab.Navigator>
+  );
+};
 export default () => {
   const scheme = useColorScheme();
   const uitheme = useTheme();
@@ -31,10 +72,9 @@ export default () => {
     },
   };
 
-  // const Tab = createBottomTabNavigator();
   const Tab = createMaterialTopTabNavigator();
 
-  const BottomApp = () => (
+  const TopApp = () => (
     <Tab.Navigator>
       <Tab.Screen name="Uploaded" component={Added_contacts} />
       <Tab.Screen name="Offline" component={OfflineMode} />
@@ -59,11 +99,18 @@ export default () => {
           component={Login}
         />
         <Stack.Screen
+          name="HomeScreen"
+          options={{
+            headerShown: false,
+          }}
+          component={BottomApp}
+        />
+        <Stack.Screen
           name="AddedContacts"
           options={{
             headerTitle: "Beneficiaries",
           }}
-          component={BottomApp}
+          component={TopApp}
         />
         <Stack.Screen
           name="Beneficiary_form"

@@ -1,54 +1,53 @@
 import { Button, Layout, Text } from "@ui-kitten/components";
 import * as React from "react";
-import {
-  Dimensions,
-  Image,
-  View,
-  ImageBackground,
-  StyleSheet,
-} from "react-native";
+import { Dimensions, View, ImageBackground, StyleSheet } from "react-native";
 
 export default (props) => {
   return (
     <>
-      <ImageBackground
-        source={require("../assets/farmer.jpg")}
-        style={styles.coverImage}
-      >
-        <View style={styles.darkness} />
-        <Layout style={styles.parent}>
-          <Text category="h1" style={styles.title}>
-            Welcome to{"\n"} FAO
-          </Text>
-          <Text category="h5" style={styles.subtitle}>
-            Food and Agriculture Organization of the United Nations
-          </Text>
-        </Layout>
-        <Button
-          onPress={() => {
-            props.navigation.navigate("Login");
-          }}
-          style={styles.btn}
-          status="info"
-          size="large"
+      <View style={styles.container}>
+        <ImageBackground
+          source={require("../assets/Woman.jpg")}
+          style={styles.coverImage}
+          resizeMode="cover"
         >
-          Get started
-        </Button>
-        <Text style={styles.footerText}>Already have an account? Login</Text>
-      </ImageBackground>
+          <View style={styles.darkness} />
+          <Layout style={styles.parent}>
+            <Text category="h1" style={styles.title}>
+              Welcome to{"\n"} FAO
+            </Text>
+            <Text category="h5" style={styles.subtitle}>
+              Food and Agriculture Organization of the United Nations
+            </Text>
+          </Layout>
+          <Button
+            onPress={() => {
+              props.navigation.navigate("Login");
+            }}
+            style={styles.btn}
+            status="info"
+            size="large"
+          >
+            Get started
+          </Button>
+          <Text style={styles.footerText}>Already have an account? Login</Text>
+        </ImageBackground>
+      </View>
     </>
   );
 };
 
 const styles = StyleSheet.create({
-  coverImage: {
+  container: {
     flex: 1,
-    resizeMode: "center",
+    position: "relative",
+  },
+
+  coverImage: {
     alignItems: "center",
     justifyContent: "center",
     height: "100%",
     width: "100%",
-    position: "relative",
   },
   darkness: {
     backgroundColor: "rgba(0,0,0,0.5)",
@@ -56,6 +55,7 @@ const styles = StyleSheet.create({
     height: "100%",
     position: "absolute",
   },
+
   parent: {
     height: Dimensions.get("window").height * 0.65,
     paddingBottom: 50,
@@ -75,11 +75,13 @@ const styles = StyleSheet.create({
     lineHeight: 40,
     letterSpacing: 1.15,
     fontWeight: "900",
+    color: "#fff",
   },
   subtitle: {
     marginVertical: 10,
     lineHeight: 30,
     textAlign: "center",
+    color: "#fff",
   },
 
   btn: {
@@ -91,5 +93,6 @@ const styles = StyleSheet.create({
   footerText: {
     fontSize: 16,
     letterSpacing: 1.15,
+    color: "#fff",
   },
 });

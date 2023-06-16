@@ -6,6 +6,7 @@ import {
   Text,
   useTheme,
 } from "@ui-kitten/components";
+import { FontAwesome5 } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { URL } from "@env";
 import generateToken from "./test";
@@ -30,6 +31,7 @@ export default (props) => {
   const [password, setpassword] = React.useState();
   const [loading, setloading] = React.useState();
   const [loaddata, setloadata] = React.useState(true);
+  const [textEntry, setTextEntry] = React.useState(true);
 
   React.useEffect(() => {
     console.log(URL);
@@ -169,21 +171,58 @@ export default (props) => {
       ) : (
         <Layout style={styles.parent}>
           <Image source={image} style={styles.image} />
-          <Text category="h4" style={styles.title}>
-            Login to your account
-          </Text>
+          <View>
+            <Text category="h2" style={styles.title}>
+              Welcome Back!
+            </Text>
+            <Text style={{ color: "grey" }}>
+              Use credentials to access your account
+            </Text>
+          </View>
 
-          <Input
-            style={{ margin: 10 }}
-            onChangeText={(text) => setemail(text)}
-            placeholder="Email"
-          />
-          <Input
-            style={{ margin: 10 }}
-            secureTextEntry
-            onChangeText={(text) => setpassword(text)}
-            placeholder="Password"
-          />
+          <View
+            style={{
+              width: "100%",
+              paddingHorizontal: 30,
+            }}
+          >
+            <View>
+              <TextInput
+                style={styles.input}
+                onChangeText={(text) => setemail(text)}
+                placeholder="Enter Username"
+                placeholderTextColor="#0495EE"
+              />
+              <FontAwesome5
+                name="user"
+                color="#0495EE"
+                size={17.5}
+                style={{ position: "absolute", top: 20, left: 10 }}
+              />
+            </View>
+            <View>
+              <TextInput
+                style={styles.input}
+                secureTextEntry={textEntry}
+                onChangeText={(text) => setpassword(text)}
+                placeholder="Enter Password"
+                placeholderTextColor="#0495EE"
+              />
+              <FontAwesome5
+                name="lock"
+                color="#0495EE"
+                size={17.5}
+                style={{ position: "absolute", top: 20, left: 10 }}
+              />
+              <FontAwesome5
+                name={textEntry ? "eye-slash" : "eye"}
+                onPress={() => setTextEntry((val) => (val = !val))}
+                color="black"
+                size={17.5}
+                style={{ position: "absolute", top: 20, right: 10 }}
+              />
+            </View>
+          </View>
           {loading ? (
             <Loading />
           ) : (
@@ -201,20 +240,35 @@ const styles = StyleSheet.create({
   parent: {
     flex: 1,
     justifyContent: "center",
+    gap: 40,
     alignItems: "center",
   },
 
   image: {
     height: 150,
     width: 150,
-    marginVertical: 20,
   },
   title: {
     margin: 10,
+    textAlign: "center",
+    fontWeight: "bold",
+    fontSize: 35,
+    marginVertical: 0,
+  },
+  input: {
+    position: "relative",
+    borderColor: "#0495EE",
+    borderWidth: 1.5,
+    paddingHorizontal: 35,
+    paddingVertical: 15,
+    fontSize: 16,
+    borderRadius: 7,
+    marginBottom: 25,
   },
   btn: {
     width: "80%",
     margin: 10,
+    paddingVertical: 20,
   },
   loadingparent: {
     alignItems: "center",

@@ -1,6 +1,12 @@
 import { Button, Layout, Text } from "@ui-kitten/components";
 import * as React from "react";
-import { Dimensions, View, ImageBackground, StyleSheet } from "react-native";
+import {
+  Dimensions,
+  View,
+  ImageBackground,
+  StyleSheet,
+  Image,
+} from "react-native";
 
 export default (props) => {
   return (
@@ -30,7 +36,17 @@ export default (props) => {
           >
             Get started
           </Button>
-          <Text style={styles.footerText}>Already have an account? Login</Text>
+          <Text style={styles.footerText}>
+            Already have an account?{" "}
+            <Text
+              style={styles.footerText}
+              onPress={() => {
+                props.navigation.navigate("Login");
+              }}
+            >
+              Login
+            </Text>
+          </Text>
         </ImageBackground>
       </View>
     </>
@@ -45,9 +61,11 @@ const styles = StyleSheet.create({
 
   coverImage: {
     alignItems: "center",
+    alignSelf: "center",
     justifyContent: "center",
     height: "100%",
     width: "100%",
+    position: "relative",
   },
   darkness: {
     backgroundColor: "rgba(0,0,0,0.5)",

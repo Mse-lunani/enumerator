@@ -20,6 +20,7 @@ export default (props) => {
       color: "#2F80ED",
       textColor: "#FFF",
       chipColor: "rgba(255, 255, 255, 0.4)",
+      link: "AddedContacts",
     },
     {
       iconName: "rocket-launch",
@@ -29,6 +30,7 @@ export default (props) => {
       color: "#FAF0EB",
       textColor: "#8F4724",
       chipColor: "rgba(241, 171, 136, 0.4)",
+      link: "HomeScreen",
     },
     {
       iconName: "rocket-launch",
@@ -38,6 +40,7 @@ export default (props) => {
       color: "#EFEBFA",
       textColor: "#4400FF",
       chipColor: "rgba(175, 147, 251, 1)",
+      link: "HomeScreen",
     },
     {
       iconName: "account",
@@ -47,6 +50,7 @@ export default (props) => {
       color: "#02D3E0",
       textColor: "#FFF",
       chipColor: "rgba(255, 255, 255, 0.4)",
+      link: "HomeScreen",
     },
   ];
   return (
@@ -60,7 +64,7 @@ export default (props) => {
           style={{ marginRight: 5 }}
         />
         <View>
-          <Text style={styles.userName}>Jane Doe</Text>
+          <Text style={styles.userName}>{global.user.name}</Text>
           <Text style={styles.userRole}>Enumerator</Text>
         </View>
       </View>
@@ -83,13 +87,13 @@ export default (props) => {
           data={cardData}
           numColumns={2}
           renderItem={({ item }) => {
-            return <FeatureCard item={item} />;
+            return <FeatureCard item={item} navigation={props.navigation} />;
           }}
         />
       </View>
-      <Text category="h5" style={styles.category}>
+      {/* <Text category="h5" style={styles.category}>
         Members per intervention
-      </Text>
+      </Text> */}
     </Layout>
   );
 };

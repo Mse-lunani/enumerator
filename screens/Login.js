@@ -64,7 +64,7 @@ export default (props) => {
             }
           );
         });
-        props.navigation.replace("AddedContacts");
+        props.navigation.replace("HomeScreen");
       } else {
         setloadata(false);
       }

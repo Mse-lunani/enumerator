@@ -153,7 +153,7 @@ export default (props) => {
           global.user = res.data;
           global.projects = res.projects;
           global.seasons = res.seasons;
-          props.navigation.replace("AddedContacts");
+          props.navigation.replace("HomeScreen");
         } else {
           alert("it seems the email or password is wrong");
         }

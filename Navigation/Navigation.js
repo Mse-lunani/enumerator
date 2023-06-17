@@ -54,7 +54,7 @@ const BottomApp = () => {
         options={{
           headerShown: false,
           tabBarIcon: ({ color, size }) => (
-            <FontAwesome name="user-o" color={color} size={size} />
+            <FontAwesome name="user" color={color} size={size} />
           ),
         }}
       />
@@ -109,6 +109,11 @@ export default () => {
           name="AddedContacts"
           options={{
             headerTitle: "Beneficiaries",
+            headerRight: () => {
+              return <MaterialIcons name="search" color="#fff" size={22} />;
+            },
+            headerStyle: { backgroundColor: "#009EDB" },
+            headerTintColor: "#fff",
           }}
           component={TopApp}
         />

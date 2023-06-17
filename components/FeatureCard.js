@@ -1,4 +1,4 @@
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, TouchableOpacity } from "react-native";
 import { Text } from "@ui-kitten/components";
 import React from "react";
 import { FontAwesome5, MaterialCommunityIcons } from "@expo/vector-icons";
@@ -6,7 +6,8 @@ import { FontAwesome5, MaterialCommunityIcons } from "@expo/vector-icons";
 export default (props) => {
   const { item } = props;
   return (
-    <View
+    <TouchableOpacity
+      onPress={() => props.navigation.navigate(item.link)}
       style={{
         backgroundColor: item.color,
         ...styles.displayCard,
@@ -31,7 +32,7 @@ export default (props) => {
           +{item.rate}%
         </Text>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 

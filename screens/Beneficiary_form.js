@@ -236,10 +236,14 @@ export default (props) => {
       );
     });
   };
-  // const [screenValid, setScreenValid] = React.useState(false);
-  const namesPattern = /^(\b\w+\b\s*){2,}$/;
-  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  const CheckValidity = (screen, inputVisited) => {
+
+  // Form validations
+
+  const namesPattern = /^(\b\w+\b\s*){2,}$/; //Pattern to validate entry of at least 2 names
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; //Pattern to validate entry of valid email address
+
+  // function that enables/disables next button depending on whether form screen is valid
+  const CheckValidity = (screen) => {
     let validityObject = { isValid: false };
 
     switch (screen) {
@@ -281,8 +285,27 @@ export default (props) => {
         if (emptyFields.every((v) => v === null || v.length === 0)) {
           validityObject.isValid = true;
         } else {
-          validityObject.isValid = false;
+          if (
+            namesPattern.test(alt_beneficiary_name) &&
+            alt_beneficiary_age &&
+            +alt_beneficiary_age >= 18 &&
+            +alt_beneficiary_age <= 100 &&
+            alt_beneficiary_email &&
+            emailPattern.test(alt_beneficiary_email) &&
+            alt_beneficiary_phone &&
+            alt_beneficiary_phone.toString().length === 10
+          ) {
+            validityObject.isValid = true;
+          } else {
+            validityObject.isValid = false;
+          }
         }
+        break;
+      case 4:
+        validityObject.isValid = true;
+        break;
+      case 5:
+        validityObject.isValid = true;
         break;
 
       default:
@@ -601,6 +624,7 @@ export default (props) => {
                     onChangeText={(text) => {
                       setbeneficiary_phone(text);
                     }}
+                    keyboardType="phone-pad"
                     style={
                       isVisited.includes("beneficiary_phone") &&
                       (!beneficiary_phone ||
@@ -666,24 +690,92 @@ export default (props) => {
                 onChangeText={(text) => {
                   setaltbeneficiary_name(text);
                 }}
+                style={
+                  isVisited.includes("alt_beneficiary_name") &&
+                  (!namesPattern.test(alt_beneficiary_name) ||
+                    alt_beneficiary_name.length < 1) &&
+                  styles.errorInput
+                }
+                onBlur={() => {
+                  !isVisited.includes("alt_beneficiary_name")
+                    ? setIsVisited((val) => {
+                        return [...val, "alt_beneficiary_name"];
+                      })
+                    : null;
+                }}
               />
+              {isVisited.includes("alt_beneficiary_name") &&
+                (!namesPattern.test(alt_beneficiary_name) ||
+                  alt_beneficiary_name.length < 1) && (
+                  <Text style={{ ...styles.errorText, maxWidth: "auto" }}>
+                    Please input at least 2 names
+                  </Text>
+                )}
               <View style={styles.row}>
-                <Input
-                  label="Age"
-                  value={alt_beneficiary_age}
-                  onChangeText={(text) => {
-                    setalt_beneficiary_age(text);
-                  }}
-                  style={styles.input}
-                />
-                <Input
-                  label="Email"
-                  value={alt_beneficiary_email}
-                  onChangeText={(text) => {
-                    setalt_beneficiary_email(text);
-                  }}
-                  style={styles.input}
-                />
+                <View>
+                  <Input
+                    label="Age"
+                    value={alt_beneficiary_age}
+                    onChangeText={(text) => {
+                      setalt_beneficiary_age(text);
+                    }}
+                    keyboardType="numeric"
+                    style={
+                      isVisited.includes("alt_beneficiary_age") &&
+                      (!alt_beneficiary_age ||
+                        !(+alt_beneficiary_age >= 18) ||
+                        !(+alt_beneficiary_age <= 100))
+                        ? { ...styles.input, ...styles.errorInput }
+                        : { ...styles.input }
+                    }
+                    onBlur={() => {
+                      !isVisited.includes("alt_beneficiary_age")
+                        ? setIsVisited((val) => {
+                            return [...val, "alt_beneficiary_age"];
+                          })
+                        : null;
+                    }}
+                  />
+                  {isVisited.includes("alt_beneficiary_age") &&
+                    (!alt_beneficiary_age ||
+                      !(+alt_beneficiary_age >= 18) ||
+                      !(+alt_beneficiary_age <= 100)) && (
+                      <Text style={styles.errorText}>
+                        Age must be between 18 and 100
+                      </Text>
+                    )}
+                </View>
+                <View>
+                  <Input
+                    label="Email"
+                    value={alt_beneficiary_email}
+                    onChangeText={(text) => {
+                      setalt_beneficiary_email(text);
+                    }}
+                    keyboardType="email-address"
+                    style={
+                      isVisited.includes("alt_beneficiary_email") &&
+                      (!alt_beneficiary_email ||
+                        !emailPattern.test(alt_beneficiary_email))
+                        ? { ...styles.input, ...styles.errorInput }
+                        : { ...styles.input }
+                    }
+                    onBlur={() => {
+                      !isVisited.includes("alt_beneficiary_email")
+                        ? setIsVisited((val) => {
+                            return [...val, "alt_beneficiary_email"];
+                          })
+                        : null;
+                    }}
+                  />
+                  {isVisited.includes("alt_beneficiary_email") &&
+                    (!alt_beneficiary_email ||
+                      !emailPattern.test(alt_beneficiary_email)) && (
+                      <Text style={styles.errorText}>
+                        Please enter a valid email address
+                      </Text>
+                    )}
+                </View>
               </View>
 
               <Select
@@ -706,7 +798,28 @@ export default (props) => {
                 onChangeText={(text) => {
                   setalt_beneficiary_phone(text);
                 }}
+                keyboardType="phone-pad"
+                style={
+                  isVisited.includes("alt_beneficiary_phone") &&
+                  (!alt_beneficiary_phone ||
+                    alt_beneficiary_phone.toString().length !== 10) &&
+                  styles.errorInput
+                }
+                onBlur={() => {
+                  !isVisited.includes("alt_beneficiary_phone")
+                    ? setIsVisited((val) => {
+                        return [...val, "alt_beneficiary_phone"];
+                      })
+                    : null;
+                }}
               />
+              {isVisited.includes("alt_beneficiary_phone") &&
+                (!alt_beneficiary_phone ||
+                  alt_beneficiary_phone.toString().length !== 10) && (
+                  <Text style={{ ...styles.errorText, maxWidth: "auto" }}>
+                    Phone number must be 10 digits
+                  </Text>
+                )}
             </Card>
           )}
           {index == 4 && (
